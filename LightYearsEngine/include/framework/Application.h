@@ -7,6 +7,7 @@ namespace ly
 	{
 	public:
 		Application();
+		virtual ~Application() = default;
 		void Run();
 	private:
 		void TickInternal(float deltaTime);
