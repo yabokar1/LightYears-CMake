@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "framework/Core.h"
 #include "framework/Object.h"
 
 namespace ly
@@ -24,6 +25,6 @@ namespace ly
 		World* mOwningWorld;
 		bool mHasBegunPlay;
 		sf::Sprite mSprite;
-		sf::Texture mTexture;
+		shared<sf::Texture> mTexture;
 	};
 }

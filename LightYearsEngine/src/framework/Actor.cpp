@@ -1,4 +1,5 @@
 #include "framework/Actor.h"
+#include "framework/AssetManager.h"
 #include "framework/Core.h"
 
 namespace ly
@@ -36,11 +37,16 @@ namespace ly
 
 	void Actor::SetTexture(const std::string& texturePath)
 	{
-		mTexture.loadFromFile(texturePath);
-		mSprite.setTexture(mTexture);
+		mTexture = AssetManager::Get().LoadTexture(texturePath);
+		if (!mTexture)
+		{
+			return;
+		}
 
-		int textureWidth = mTexture.getSize().x;
-		int textureHeight = mTexture.getSize().y;
+		mSprite.setTexture(*mTexture);
+
+		int textureWidth = mTexture->getSize().x;
+		int textureHeight = mTexture->getSize().y;
 		mSprite.setTextureRect(sf::IntRect{0, 0, textureWidth, textureHeight});
 	}
 
@@ -56,11 +62,9 @@ namespace ly
 
 	void Actor::BeginPlay()
 	{
-		LOG("actor begin play");
 	}
 
 	void Actor::Tick(float deltaTime)
 	{
-		LOG("actor ticking");
 	}
 }
