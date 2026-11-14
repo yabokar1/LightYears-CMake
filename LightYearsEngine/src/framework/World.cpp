@@ -44,12 +44,20 @@ namespace ly
 			}
 			else
 			{
-				(*iter)->Tick(deltaTime);
+				(*iter)->TickInternal(deltaTime);
 				++iter;
 			}
 		}
 
 		Tick(deltaTime);
+	}
+
+	void World::Render(sf::RenderWindow& window)
+	{
+		for (auto& actor : mActors)
+		{
+			actor->Render(window);
+		}
 	}
 
 	void World::BeginPlay()

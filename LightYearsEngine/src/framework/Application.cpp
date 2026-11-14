@@ -3,8 +3,8 @@
 
 namespace ly
 {
-	Application::Application()
-		: mWindow{sf::VideoMode(1024, 1440), "Light Years"},
+	Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& windowTitle, sf::Uint32 windowStyle)
+		: mWindow{sf::VideoMode(windowWidth, windowHeight), windowTitle, windowStyle},
 		mTargetFrameRate{60.f},
 		mTickClock{},
 		mCurrentWorld{nullptr}
@@ -63,10 +63,9 @@ namespace ly
 
 	void Application::Render()
 	{
-		sf::CircleShape circle{ 50.f };
-		circle.setFillColor(sf::Color::Green);
-		circle.setOrigin(50.f, 50.f);
-		circle.setPosition(mWindow.getSize().x / 2.f, mWindow.getSize().y / 2.f);
-		mWindow.draw(circle);
+		if (mCurrentWorld)
+		{
+			mCurrentWorld->Render(mWindow);
+		}
 	}
 }

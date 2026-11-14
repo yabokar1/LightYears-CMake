@@ -1,15 +1,18 @@
 #include "gameFramework/GameApplication.h"
+#include "config.h"
 #include "framework/Actor.h"
 #include "framework/World.h"
 
 namespace ly
 {
 	GameApplication::GameApplication()
-		: mCounter{0.f}
+		: Application{600, 980, "Light Years", sf::Style::Titlebar | sf::Style::Close},
+		mCounter{0.f}
 	{
 		weak<World> newWorld = LoadWorld<World>();
 		newWorld.lock()->SpawnActor<Actor>();
 		mActorToDestroy = newWorld.lock()->SpawnActor<Actor>();
+		mActorToDestroy.lock()->SetTexture(GetResourceDir() + "SpaceShooterRedux/PNG/playerShip1_blue.png");
 	}
 
 	void GameApplication::Tick(float deltaTime)

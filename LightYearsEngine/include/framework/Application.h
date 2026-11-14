@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <SFML/Graphics.hpp>
 #include "framework/Core.h"
 
@@ -8,7 +9,7 @@ namespace ly
 	class Application
 	{
 	public:
-		Application();
+		Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& windowTitle, sf::Uint32 windowStyle);
 		virtual ~Application() = default;
 		void Run();
 
