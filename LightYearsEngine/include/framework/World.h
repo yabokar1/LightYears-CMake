@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
 #include "framework/Core.h"
 
 namespace ly
@@ -10,31 +11,34 @@ namespace ly
 	{
 	public:
 		World(Application* owningApp);
-		virtual ~World();
-
+		
+		// Application.cpp uses these public methods 
 		void BeginPlayInternal();
 		void TickInternal(float deltaTime);
 		void Render(sf::RenderWindow& window);
 
+		virtual ~World();
+
 		template<typename ActorType>
 		weak<ActorType> SpawnActor();
-
 	private:
-		virtual void BeginPlay();
-		virtual void Tick(float deltaTime);
+		void BeginPlay();
+		void Tick(float deltaTime);
 
 		Application* mOwningApp;
-		bool mBegunPlay;
+		bool mBeganPlay;
 
-		list<shared<Actor>> mActors;
-		list<shared<Actor>> mPendingActors;
+		List<shared<Actor>> mActors; // pending actors are staged into this list
+		List<shared<Actor>> mPendingActors; // queued into the pending actors list
 	};
+
 
 	template<typename ActorType>
 	weak<ActorType> World::SpawnActor()
 	{
-		shared<ActorType> newActor{new ActorType{this}};
+		shared<ActorType> newActor{ new ActorType{this} };
 		mPendingActors.push_back(newActor);
 		return newActor;
 	}
+
 }

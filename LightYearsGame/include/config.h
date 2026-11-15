@@ -3,7 +3,7 @@
 
 std::string GetResourceDir()
 {
-#ifdef NDEBUG
+#ifdef NDEBUG //release build
 	return "assets/";
 #else
 	return "C:/Users/yabok/source/repos/LightYears/LightYearsGame/assets/";

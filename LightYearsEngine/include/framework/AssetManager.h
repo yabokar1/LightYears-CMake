@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <SFML/Graphics.hpp>
+
 #include "framework/Core.h"
 
 namespace ly
@@ -9,14 +9,12 @@ namespace ly
 	{
 	public:
 		static AssetManager& Get();
-		shared<sf::Texture> LoadTexture(const std::string& texturePath);
+		shared<sf::Texture> LoadTexture(const std::string& path);
 		void CleanCycle();
-
 	protected:
 		AssetManager();
-
 	private:
 		static unique<AssetManager> assetManager;
-		dictionary<std::string, shared<sf::Texture>> mLoadedTextureMap;
+		Dictionary<std::string, shared<sf::Texture>> mLoadedTextureMap;
 	};
 }

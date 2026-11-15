@@ -1,28 +1,23 @@
 #include "framework/World.h"
-#include "framework/Actor.h"
 #include "framework/Core.h"
+#include "framework/Actor.h"
 
 namespace ly
 {
 	World::World(Application* owningApp)
 		: mOwningApp{owningApp},
-		mBegunPlay{false},
+		mBeganPlay{false},
 		mActors{},
 		mPendingActors{}
 	{
 
 	}
 
-	World::~World()
-	{
-
-	}
-
 	void World::BeginPlayInternal()
 	{
-		if (!mBegunPlay)
+		if (!mBeganPlay)
 		{
-			mBegunPlay = true;
+			mBeganPlay = true;
 			BeginPlay();
 		}
 	}
@@ -38,13 +33,13 @@ namespace ly
 
 		for (auto iter = mActors.begin(); iter != mActors.end();)
 		{
-			if ((*iter)->IsPendingDestroy())
+			if (iter->get()->IsPendingDestroy())
 			{
 				iter = mActors.erase(iter);
 			}
 			else
 			{
-				(*iter)->TickInternal(deltaTime);
+				iter->get()->TickInternal(deltaTime);
 				++iter;
 			}
 		}
@@ -60,11 +55,18 @@ namespace ly
 		}
 	}
 
+	World::~World()
+	{
+
+	}
+
 	void World::BeginPlay()
 	{
+
 	}
 
 	void World::Tick(float deltaTime)
 	{
+
 	}
 }

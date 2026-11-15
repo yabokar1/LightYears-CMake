@@ -6,21 +6,15 @@ namespace ly
 	Object::Object()
 		: mIsPendingDestroy{false}
 	{
-
 	}
 
 	Object::~Object()
 	{
-		LOG("object destroyed");
+		LOG("Object Destroyed");
 	}
 
 	void Object::Destroy()
 	{
 		mIsPendingDestroy = true;
-	}
-
-	bool Object::IsPendingDestroy() const
-	{
-		return mIsPendingDestroy;
 	}
 }
