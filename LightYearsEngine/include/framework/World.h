@@ -16,11 +16,12 @@ namespace ly
 		void BeginPlayInternal();
 		void TickInternal(float deltaTime);
 		void Render(sf::RenderWindow& window);
+		sf::Vector2u GetWindowSize() const;
 
 		virtual ~World();
 
-		template<typename ActorType>
-		weak<ActorType> SpawnActor();
+		template<typename ActorType, typename... Args>
+		weak<ActorType> SpawnActor(Args... args);
 	private:
 		void BeginPlay();
 		void Tick(float deltaTime);
@@ -33,10 +34,10 @@ namespace ly
 	};
 
 
-	template<typename ActorType>
-	weak<ActorType> World::SpawnActor()
+	template<typename ActorType, typename... Args>
+	weak<ActorType> World::SpawnActor(Args... args)
 	{
-		shared<ActorType> newActor{ new ActorType{this} };
+		shared<ActorType> newActor{ new ActorType{this, args...} };
 		mPendingActors.push_back(newActor);
 		return newActor;
 	}
