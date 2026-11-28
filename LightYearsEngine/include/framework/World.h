@@ -22,6 +22,10 @@ namespace ly
 
 		template<typename ActorType, typename... Args>
 		weak<ActorType> SpawnActor(Args... args);
+
+
+		void CleanCycle();
+
 	private:
 		void BeginPlay();
 		void Tick(float deltaTime);

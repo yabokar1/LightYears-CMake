@@ -2,6 +2,7 @@
 #include "framework/Core.h"
 #include "framework/World.h"
 #include "framework/AssetManager.h"
+#include "framework/PhysicsSystem.h"
 
 namespace ly
 {
@@ -56,10 +57,17 @@ namespace ly
 			currentWorld->TickInternal(deltaTime);
 		}
 
+		PhysicsSystem::Get().Step(deltaTime);
+
 		if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval) // After 2 seconds clean any unused textures
 		{
 			mCleanCycleClock.restart();
 			AssetManager::Get().CleanCycle(); // Singleton pattern static method AssetManager::Get()
+
+			if (currentWorld)
+			{
+				currentWorld->CleanCycle();
+			}
 		}
 	}
 

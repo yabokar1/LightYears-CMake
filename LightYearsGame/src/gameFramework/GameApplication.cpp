@@ -2,6 +2,7 @@
 #include "framework/World.h"
 #include "framework/AssetManager.h"
 #include "player/PlayerSpaceship.h"
+#include "spaceship/Spaceship.h"
 #include "config.h"
 
 ly::Application* GetApplication()
@@ -21,10 +22,22 @@ namespace ly
 		testPlayerSpaceship = newWorld.lock()->SpawnActor<PlayerSpaceship>(); 
 		testPlayerSpaceship.lock()->SetActorLocation(sf::Vector2f(300.f, 490.f));
 		testPlayerSpaceship.lock()->SetActorRotation(-90.f);
+
+		weak<Spaceship> testSpaceship = newWorld.lock()->SpawnActor<Spaceship>();
+		testSpaceship.lock()->SetTexture("SpaceShooterRedux/PNG/playerShip1_blue.png");
+		testSpaceship.lock()->SetActorLocation(sf::Vector2f{100.f, 50.f});
+		counter = 0.f;
 	}
 
 	void GameApplication::Tick(float deltaTime)
 	{
-
+		counter += deltaTime;
+		if (counter > 10.f)
+		{
+			if (!testPlayerSpaceship.expired())
+			{
+				testPlayerSpaceship.lock()->Destroy();
+			}
+		}
 	}
 }

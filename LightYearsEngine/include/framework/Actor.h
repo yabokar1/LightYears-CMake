@@ -3,7 +3,7 @@
 
 #include "framework/Core.h"
 #include "framework/Object.h"
-
+class b2Body;
 
 namespace ly
 {
@@ -33,16 +33,32 @@ namespace ly
 		
 		sf::Vector2f GetActorForwardDirection() const;
 		sf::Vector2f GetActorRightDirection() const;
+		sf::FloatRect GetActorGlobalBounds() const;
 		sf::Vector2u GetWindowSize() const;
 
 		World* GetWorld() const { return mOwningWorld; }
 
+		bool IsActorOutOfWindowBounds() const;
+
+		void SetEnablePhysics(bool enable);
+		virtual void OnActorBeginOverlap(Actor* other);
+		virtual void OnActorEndOverlap(Actor* other);
+
+		virtual void Destroy() override;
 	private:
+		void InitializedPhysics();
+		void UnInitializedPhysics();
+		void UpdatePhysicsBodyTransform();
+
+
 		void CenterPivot();
 		World* mOwningWorld;
 		bool mHasBeganPlay;
 
 		sf::Sprite mSprite;
 		shared<sf::Texture> mTexture;
+		b2Body* mPhysicsBody;
+
+		bool mPhysicsEnabled;
 	};
 }

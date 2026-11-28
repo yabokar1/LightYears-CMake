@@ -37,17 +37,9 @@ namespace ly
 		}
 		mPendingActors.clear();
 
-		for (auto iter = mActors.begin(); iter != mActors.end();)
+		for (auto iter = mActors.begin(); iter != mActors.end(); ++iter)
 		{
-			if (iter->get()->IsPendingDestroy())
-			{
-				iter = mActors.erase(iter);
-			}
-			else
-			{
-				iter->get()->TickInternal(deltaTime);
-				++iter;
-			}
+			iter->get()->TickInternal(deltaTime);
 		}
 
 		Tick(deltaTime);
@@ -74,5 +66,21 @@ namespace ly
 	void World::Tick(float deltaTime)
 	{
 
+	}
+
+
+	void World::CleanCycle()
+	{
+		for (auto iter = mActors.begin(); iter != mActors.end();)
+		{
+			if (iter->get()->IsPendingDestroy())
+			{
+				iter = mActors.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
 	}
 }

@@ -3,10 +3,10 @@
 namespace ly
 {
 	Bullet::Bullet(World* world, Actor* owner, const std::string& texturePath, float speed, float damage)
-		: Actor{world, texturePath},
-		mOwner{owner},
-		mSpeed{speed},
-		mDamage{damage}
+		: Actor{ world, texturePath },
+		mOwner{ owner },
+		mSpeed{ speed },
+		mDamage{ damage }
 	{
 	}
 
@@ -24,6 +24,17 @@ namespace ly
 	{
 		Actor::Tick(deltaTime);
 		Move(deltaTime);
+
+		if (IsActorOutOfWindowBounds())
+		{
+			Destroy();
+		}
+	}
+
+	void Bullet::BeginPlay()
+	{
+		Actor::BeginPlay();
+		SetEnablePhysics(true);
 	}
 
 	void Bullet::Move(float deltaTime)
